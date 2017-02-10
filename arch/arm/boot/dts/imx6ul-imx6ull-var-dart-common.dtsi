@@ -222,6 +222,30 @@
 	status = "okay";
 };
 
+/* HACH START - Enable PWM2. */
+&pwm2 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_pwm2>;
+	status = "okay";
+};
+/* HACH END */
+
+/* HACH START - Enable SPI 1. */
+&ecspi1 {
+    fsl,spi-num-chipselects = <1>;
+    cs-gpios = <&gpio4 26 0>;
+    pinctrl-names = "default";
+    pinctrl-0 = <&pinctrl_ecspi1_1>;
+    status = "okay";
+
+        chip1: spidev@0 {
+               compatible = "spidev";
+               spi-max-frequency = <12000000>;
+               reg = <0>;
+        };
+};
+/* HACH END */
+
 &pxp {
 	status = "okay";
 };
@@ -520,6 +544,14 @@
 			>;
 		};
 
+		/* HACH START - Enable PWM2. */		
+		pinctrl_pwm2: pwm2grp {
+			fsl,pins = <
+				MX6UL_PAD_GPIO1_IO09__PWM2_OUT  0x110b0
+			>;
+		};
+		/* HACH END */
+
 		pinctrl_uart1: uart1grp {
 			fsl,pins = <
 				MX6UL_PAD_UART1_TX_DATA__UART1_DCE_TX	0x1b0b1
@@ -662,6 +694,17 @@
 				MX6UL_PAD_GPIO1_IO08__WDOG1_WDOG_B	0x78b0
 			>;
 		};
+
+		/* HACH START - Enable SPI 1. */
+		pinctrl_ecspi1_1: ecspi1grp {
+            fsl,pins = <
+                MX6UL_PAD_CSI_DATA07__ECSPI1_MISO   0x100b1     /* Ball:D1, SOM: J2.36 */
+                MX6UL_PAD_CSI_DATA06__ECSPI1_MOSI   0x100b1     /* Ball:D2, SOM: J2.38 */
+                MX6UL_PAD_CSI_DATA04__ECSPI1_SCLK   0x100b1     /* Ball:D4, SOM: J2.30 */
+                MX6UL_PAD_CSI_DATA05__GPIO4_IO26    0x80000000  /* Ball:D3, SOM: J2.32 */
+            >;
+        };
+		/* HACH END */
 	};
 };
 
